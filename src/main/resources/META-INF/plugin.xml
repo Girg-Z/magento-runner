@@ -1,18 +1,16 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.girgz.magentorunner</id>
-    <name>magento-runner Template</name>
+    <name>magento-runner</name>
     <vendor>girg-z</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.girgz.magentorunner.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow id="M2 Quick actions" secondary="true" icon="AllIcons.RunConfigurations.Application" anchor="right"
+                    factoryClass="com.github.girgz.magentorunner.ui.quickActions.QuickActionsFactory"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.girgz.magentorunner.listeners.MyFrameStateListener" topic="com.intellij.ide.FrameStateListener"/>
-    </applicationListeners>
 </idea-plugin>
