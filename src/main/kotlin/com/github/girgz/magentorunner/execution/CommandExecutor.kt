@@ -46,7 +46,7 @@ class CommandExecutor {
 
             val runner = ProgramRunner.getRunner(executor.id, conf)
             val environment = ExecutionEnvironment(executor, runner!!, runnerAndConfigurationSettings, project)
-            environment.setCallback(Callback(command, customCallback)) // Marked unstable
+//            environment.setCallback(Callback(command, customCallback)) // Marked unstable
             try {
                 // TODO: Take a look at that
                 // Can I use lambda expression instead of nested class ??
