@@ -1,6 +1,7 @@
 package com.github.girgz.magentorunner.execution
 
 import com.github.girgz.magentorunner.execution.output.ProcessorFactory
+import com.intellij.execution.DefaultExecutionTarget
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.RunManager
 import com.intellij.execution.configurations.ConfigurationTypeUtil
@@ -45,6 +46,7 @@ class CommandExecutor {
 
             val runner = ProgramRunner.getRunner(executor.id, conf)
             val environment = ExecutionEnvironment(executor, runner!!, runnerAndConfigurationSettings, project)
+            environment.setCallback(Callback(command, customCallback)) // Marked unstable
             try {
                 // TODO: Take a look at that
                 // Can I use lambda expression instead of nested class ??
@@ -53,7 +55,8 @@ class CommandExecutor {
                 // you can create it using a lambda expression prefixed with the type of the interface
                 // https://kotlinlang.org/docs/nested-classes.html#anonymous-inner-classes
 
-                runner.execute(environment, Callback(command, customCallback))
+//                runner.execute(environment, Callback(command, customCallback))
+                runner.execute(environment)
             } catch (e: ExecutionException) {
                 e.printStackTrace()
             }
