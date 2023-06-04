@@ -1,6 +1,7 @@
 package com.github.girgz.magentorunner.ui.quickActions;
 
-//import com.github.girgz.m2phpstormrunner.execution.CommandExecutor;
+import com.github.girgz.magentorunner.execution.CommandExecutor;
+import com.github.girgz.magentorunner.execution.output.processors.BalloonNotification;
 import com.intellij.ui.AnimatedIcon;
 
 import javax.swing.*;
@@ -39,6 +40,12 @@ public class QuickActions {
 
     private class RunCommand implements ActionListener {
 
+        private final BalloonNotification balloonNotification;
+
+        public RunCommand() {
+            this.balloonNotification = new BalloonNotification();
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             disableAllButtons();
@@ -51,12 +58,14 @@ public class QuickActions {
             new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-//                    CommandExecutor executor = new CommandExecutor();
-//                    executor.setCustomCallback((String output) -> {
-//                        button.setIcon(null);
-//                        enableAllButtons();
-//                    });
-//                    executor.execute(command);
+                    CommandExecutor executor = new CommandExecutor();
+                    executor.setResultWindowAutoOpen(false);
+                    executor.setCustomCallback((Integer exitCode, String output) -> {
+                        button.setIcon(null);
+                        enableAllButtons();
+                        balloonNotification.process(output);
+                    });
+                    executor.execute(command);
                     return null;
                 }
             }.execute();
